@@ -1,0 +1,10 @@
+com\example\guestbook\OfyHelper.class
+com\example\guestbook\Greeting.class
+com\example\guestbook\SignGuestbookServlet.class
+mx\bhit\omicron\app\config\ConverterConfig.class
+mx\bhit\omicron\app\config\AppConfig.class
+mx\bhit\omicron\app\controller\WebController.class
+com\example\guestbook\Guestbook.class
+mx\bhit\omicron\app\config\ServletConfig.class
+mx\bhit\omicron\app\view\resolver\JsonViewResolver.class
+mx\bhit\omicron\app\security\WebSecurityConfig.class

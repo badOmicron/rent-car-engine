@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+
+	<context:annotation-config />
+
+	<!-- Configuracion Spring Security -->
+	<!-- <import resource="classpath:securityContext.xml" /> -->
+
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- Aspectos -->
+	<aop:aspectj-autoproxy proxy-target-class="false" />
+
+	<!-- PRODUCCION -->
+	<beans profile="produccion">
+		<!-- properties -->
+		<!-- <util:properties id="securityPropertyConfigurer" -->
+		<!-- location="file:${mx.org.ife.rfe.siirfe.config.dir}/ldap/ldap.properties"></util:properties> -->
+
+		<bean
+			class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+			<property name="ignoreUnresolvablePlaceholders" value="true" />
+		</bean>
+		<!-- base de datos -->
+		<import resource="classpath:daoContext.xml" />
+		<!-- transaction manager -->
+		<bean id="transactionManager"
+			class="org.springframework.transaction.jta.WebLogicJtaTransactionManager" />
+	</beans>
+
+
+	<!-- DESARROLLO -->
+	<beans profile="pruebas">
+		<!-- properties -->
+		<!-- <util:properties id="securityPropertyConfigurer" -->
+		<!-- location="classpath:test/ldap.properties"></util:properties> -->
+
+		<bean
+			class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+			<property name="locations">
+				<list>
+					<value>classpath:test/config.properties</value>
+					<!-- <value>classpath:test/ldap.properties</value> -->
+				</list>
+			</property>
+			<property name="ignoreUnresolvablePlaceholders" value="true" />
+		</bean>
+
+		<!-- base de datos -->
+		<import resource="classpath:daoContext.xml" />
+
+		<!-- transaction manager -->
+		<!-- <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager"> 
+			<property name="sessionFactory" ref="sessionFactory"/> </bean> -->
+
+	</beans>
+
+</beans>
